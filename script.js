@@ -30,6 +30,14 @@ document.querySelectorAll('.skill-toggle').forEach(btn => {
   });
 });
 
+document.querySelectorAll('.article-toggle').forEach(btn => {
+  const list = btn.closest('h2').nextElementSibling;
+  btn.addEventListener('click', () => {
+    const isOpen = list.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  });
+});
+
 document.querySelectorAll('.copy-btn').forEach(btn => {
   btn.addEventListener('click', async () => {
     const text = btn.getAttribute('data-copy');
