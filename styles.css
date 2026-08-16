@@ -1365,10 +1365,13 @@ a { color: inherit; text-decoration: none; }
 
 .lightbox-content img,
 .lightbox-content video {
+  /* fixed box + object-fit keeps phone-recorded photos/videos centered even when
+     their reported intrinsic size doesn't match the rotation metadata on the file */
+  width: 90vw;
+  height: 86vh;
   max-width: 90vw;
   max-height: 86vh;
-  width: auto;
-  height: auto;
+  object-fit: contain;
   display: block;
   border-radius: var(--radius-md);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
@@ -1499,6 +1502,10 @@ body.lightbox-locked { overflow: hidden; }
   .carousel-btn { width: 34px; height: 34px; }
   .carousel-btn.prev { left: 2px; }
   .carousel-btn.next { right: 2px; }
+
+  .lightbox-overlay { padding: 20px; }
+  .lightbox-content img,
+  .lightbox-content video { width: 90vw; height: 80vh; }
 
   .masonry { column-count: 1; }
 
