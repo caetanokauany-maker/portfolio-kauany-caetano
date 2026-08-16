@@ -262,7 +262,7 @@ document.querySelectorAll('.book-source').forEach(source => {
       e.preventDefault();
       const ext = link.getAttribute('data-ext');
       iframe.src = ext === 'pdf'
-        ? link.href
+        ? 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' + encodeURIComponent(link.href)
         : 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(link.href);
       overlay.classList.add('open');
       document.body.classList.add('lightbox-locked');
