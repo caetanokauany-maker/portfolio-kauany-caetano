@@ -1496,7 +1496,9 @@ body.lightbox-locked { overflow: hidden; }
   .footer-top { flex-direction: column; align-items: flex-start; }
 
   .carousel-slide { height: 220px; }
-  .carousel-btn { display: none; }
+  .carousel-btn { width: 34px; height: 34px; }
+  .carousel-btn.prev { left: 2px; }
+  .carousel-btn.next { right: 2px; }
 
   .masonry { column-count: 1; }
 
