@@ -1478,7 +1478,7 @@ body.lightbox-locked { overflow: hidden; }
   }
 
   .nav-links.open {
-    max-height: 360px;
+    max-height: 480px;
   }
 
   .nav-links li {
