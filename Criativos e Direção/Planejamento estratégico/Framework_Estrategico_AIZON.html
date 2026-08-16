@@ -1,0 +1,592 @@
+<title>Framework Estratégico da AIZON</title>
+<style>
+  :root{
+    --bg:#0a0714;
+    --card:#150f28;
+    --card-2:#1b1436;
+    --card-border:#342a5c;
+    --text:#f3f0ff;
+    --muted:#a89ecb;
+    --accent:#a78bfa;
+    --accent-strong:#d8c9ff;
+    --hub-a:#2c1a5e;
+    --hub-b:#120a29;
+    --chip-bg:#20183f;
+    --chip-ink:#c9baf2;
+    --bad:#f87171; --bad-bg:rgba(248,113,113,.08);
+    --stage-1:#7c3aed; --stage-2:#9333ea; --stage-3:#6d28d9; --stage-4:#a21caf; --stage-5:#8b5cf6; --stage-6:#5b21b6;
+    --c-mkt:#7c3aed; --c-com:#9333ea; --c-produto:#c026d3; --c-cs:#8b5cf6;
+    --c-dados:#6d28d9; --c-ia:#a21caf; --c-escala:#5b21b6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1000px 560px at 50% 0%, rgba(124,58,237,.16), transparent 62%),
+      radial-gradient(900px 600px at 90% 60%, rgba(168,85,247,.10), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font-family:"Segoe UI",ui-sans-serif,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.4;
+  }
+  .wrap{max-width:1680px;margin:0 auto;padding:34px 20px 60px;}
+
+  header.top{display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center;padding:6px 0 36px;}
+  .eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:14.5px;font-weight:700;color:var(--accent-strong);display:flex;align-items:center;gap:10px;}
+  .eyebrow::before,.eyebrow::after{content:"";width:30px;height:1px;background:var(--card-border);}
+  h1{font-size:clamp(29px,4.4vw,47px);margin:10px 0 10px;font-weight:800;letter-spacing:-.015em;text-wrap:balance;}
+  .sub{color:var(--muted);font-size:18.5px;max-width:720px;margin:0;line-height:1.55;}
+
+  .section-tag{display:flex;align-items:center;gap:12px;margin:0 0 26px;}
+  .section-tag .num{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#170f31;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .section-tag b{font-size:22px;color:var(--text);}
+  .section-tag span{display:block;font-size:15.5px;color:var(--muted);margin-top:2px;}
+
+  /* ===================== FRAMEWORK (part 1) — process diagram ===================== */
+  .framework-scroll{overflow-x:auto;padding:10px 4px 8px;}
+  .diagram{
+    position:relative; display:grid; grid-template-columns:repeat(6,190px);
+    column-gap:60px; width:1440px; max-width:none; margin:0 auto; padding-bottom:74px;
+  }
+  .diagram-connectors{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:visible;}
+  .conn-path{fill:none;stroke:var(--accent);stroke-width:1.6;opacity:.55;}
+  .conn-path.dashed{stroke-dasharray:5 6;opacity:.5;}
+  .diagram-col{position:relative;z-index:1;display:flex;flex-direction:column;gap:12px;}
+  .diagram-loop-note{text-align:center;margin-top:6px;font-size:12.5px;color:var(--accent-strong);font-style:italic;}
+
+  .legend{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:22px 0 0;padding:14px 18px;background:var(--card);border:1px solid var(--card-border);border-radius:12px;}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);font-weight:600;}
+  .legend .sw{width:13px;height:13px;border-radius:4px;display:inline-block;flex:none;}
+
+  /* ===================== BRIDGE ===================== */
+  .bridge{display:flex;flex-direction:column;align-items:center;gap:6px;margin:54px 0 44px;color:var(--accent-strong);}
+  .bridge .arrow{font-size:25px;}
+  .bridge span{font-size:15.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;text-align:center;}
+
+  /* ===================== PIPELINE (Máquina de Vendas) ===================== */
+  .pipeline-scroll{overflow-x:auto;padding-bottom:8px;}
+  .pipeline{display:flex;gap:14px;min-width:1420px;align-items:flex-start;}
+  .stage{flex:1;min-width:215px;display:flex;flex-direction:column;gap:9px;}
+  .stage-head{background:var(--stage);color:#fff;border-radius:12px;padding:10px 12px;}
+  .stage-head .num{font-size:14px;font-weight:800;opacity:.85;}
+  .stage-head .name{font-size:16.5px;font-weight:800;margin-top:2px;}
+  .stage-head .obj{font-size:13.3px;opacity:.9;margin-top:4px;line-height:1.35;}
+  .stage-head .tags{margin-top:6px;font-size:16px;opacity:.9;}
+  .node{background:var(--card);border:1px solid var(--card-border);border-left:3px solid var(--stage);border-radius:10px;padding:9px 11px;font-size:14.3px;box-shadow:0 6px 14px rgba(0,0,0,.3);}
+  .node b{display:block;font-size:15px;margin-bottom:2px;}
+  .node span{color:var(--muted);font-size:13.6px;}
+  .node-line{color:var(--muted);font-size:12.6px;line-height:1.4;margin-top:5px;}
+  .node-bullets{list-style:none;margin:6px 0 0;padding:0;}
+  .node-bullets li{font-size:12px;color:var(--muted);padding:2px 0 2px 12px;position:relative;line-height:1.4;}
+  .node-bullets li::before{content:"–";position:absolute;left:0;color:var(--muted);opacity:.7;}
+  .node-objective{margin-top:8px;padding-top:8px;border-top:1px dashed var(--card-border);font-size:12px;color:var(--muted);font-style:italic;line-height:1.4;}
+  .stage-arrow{align-self:center;color:var(--muted);font-size:18px;margin:2px 0;}
+  .stage-kpi{margin-top:auto;padding-top:8px;border-top:1px dashed var(--card-border);display:flex;flex-wrap:wrap;gap:5px;}
+  .kpi{background:var(--chip-bg);color:var(--chip-ink);font-size:13px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap;}
+  .stage-kpi .kpi{font-size:12.8px;padding:3px 7px;}
+
+  .recovery{margin-top:22px;border:1px dashed var(--bad);border-radius:14px;padding:16px 18px;background:var(--bad-bg);}
+  .recovery-title{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--bad);margin-bottom:10px;}
+  .recovery-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:700px){.recovery-row{grid-template-columns:1fr;}}
+  .recovery-card{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:12px 14px;font-size:15px;}
+  .recovery-card b{display:block;margin-bottom:3px;font-size:16px;}
+  .recovery-note{margin-top:10px;font-size:14.5px;color:var(--muted);font-style:italic;}
+
+  /* ===================== FOOTER STRIP ===================== */
+  .strip{margin-top:50px;display:flex;flex-direction:column;gap:20px;}
+
+  .loop-card,.side-card{background:var(--card);border:1px solid var(--card-border);border-radius:16px;box-shadow:0 14px 30px rgba(0,0,0,.35);padding:20px;}
+  .loop-title{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .loop-badge{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#170f31;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;flex:none;}
+  .loop-title b{font-size:17.5px;color:var(--text);}
+  .loop-title span{display:block;font-size:14px;color:var(--muted);font-weight:500;}
+
+  .loop-scroll{overflow-x:auto;}
+  .loop-steps{display:flex;gap:8px;min-width:900px;align-items:stretch;}
+  .loop-step{flex:1;background:var(--card-2);border:1px solid var(--card-border);border-radius:12px;padding:11px 8px;text-align:center;}
+  .loop-step .n{width:20px;height:20px;border-radius:50%;background:rgba(167,139,250,.16);color:var(--accent-strong);font-size:13.5px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 7px;}
+  .loop-step b{font-size:14px;display:block;color:var(--text);}
+  .loop-step small{font-size:12.8px;color:var(--muted);display:block;margin-top:3px;}
+  .loop-arrow{align-self:center;color:var(--muted);font-size:17px;flex:none;}
+
+  .culture-list{list-style:none;margin:8px 0 0;padding:0;font-size:14.8px;display:grid;gap:6px;}
+  .culture-list li{display:flex;gap:7px;align-items:flex-start;color:var(--text);}
+  .culture-list li::before{content:"✓";color:var(--accent);font-weight:800;flex:none;}
+
+  .culture-banner{background:var(--card);border:1px solid var(--card-border);border-radius:16px;box-shadow:0 14px 30px rgba(0,0,0,.35);padding:26px 30px;text-align:center;margin-bottom:34px;}
+  .culture-banner .loop-title{margin-bottom:16px;}
+  .culture-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+  .culture-pills span{background:var(--chip-bg);color:var(--chip-ink);font-size:15px;font-weight:600;padding:7px 16px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;}
+  .culture-pills span::before{content:"✓";color:var(--accent);font-weight:800;}
+
+  .banner{margin-top:8px;text-align:center;padding:16px 20px;border-radius:14px;background:linear-gradient(120deg,var(--hub-a),#3b1f7a);border:1px solid var(--accent);color:#f4eeff;font-size:16px;font-weight:600;letter-spacing:.01em;}
+  .banner b{color:#e9d5ff;}
+  footer.brand{text-align:center;margin-top:20px;font-size:13.5px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;}
+
+  @media (prefers-reduced-motion: no-preference){
+    .loop-step,.node{transition:transform .15s ease, box-shadow .15s ease;}
+    .loop-step:hover,.node:hover{transform:translateY(-2px);}
+  }
+
+  /* extra tracking on bold text for readability */
+  b,
+  .stage-head .num,
+  .stage-head .name{
+    letter-spacing:.03em;
+  }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Aizon Technologies</div>
+    <h1>Framework Estratégico da AIZON</h1>
+    <p class="sub">O modelo operacional que conecta todas as áreas da empresa para transformar oportunidades em crescimento sustentável, desde o primeiro contato até a expansão dos clientes.</p>
+  </header>
+
+  <!-- ===================== PARTE 1 · FRAMEWORK ===================== -->
+  <div class="section-tag"><div class="num">1</div><div><b>O Framework</b><span>Como Marketing, Comercial, Produto, Customer Success, Dados e IA operam como um único sistema</span></div></div>
+
+  <div class="culture-banner">
+    <div class="loop-title" style="justify-content:center;"><div><b>Objetivo Comum</b><span>Nenhuma área trabalha para um resultado isolado</span></div></div>
+    <div class="culture-pills">
+      <span>Receita recorrente</span>
+      <span>Sucesso do cliente</span>
+      <span>Retenção</span>
+      <span>Crescimento sustentável</span>
+    </div>
+  </div>
+
+  <div class="framework-scroll">
+    <div class="diagram" id="diagramWrap">
+      <svg class="diagram-connectors" id="diagramSvg">
+        <defs>
+          <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"></path>
+          </marker>
+        </defs>
+      </svg>
+
+      <div class="diagram-col" style="--stage:var(--stage-1)">
+        <div class="stage-head"><div class="num">1 · AQUISIÇÃO</div></div>
+        <div class="node" id="node-a1"><b>Google Ads</b><span>Rede de pesquisa</span></div>
+        <div class="node" id="node-a2"><b>Meta Ads</b><span>Instagram / Facebook</span></div>
+        <div class="node" id="node-a3"><b>LinkedIn Ads</b><span>Lead Gen Forms</span></div>
+        <div class="node" id="node-a4"><b>Orgânico / SEO</b><span>AZ Insights, blog</span></div>
+        <div class="node" id="node-a5"><b>Indicação / parcerias</b><span>ABRACORP, contadores</span></div>
+      </div>
+
+      <div class="diagram-col" style="--stage:var(--stage-2)">
+        <div class="stage-head"><div class="num">2 · CONVERSÃO</div></div>
+        <div class="node" id="node-b1"><b>Conversão</b><span>LP + diagnóstico gratuito / isca</span></div>
+      </div>
+
+      <div class="diagram-col" style="--stage:var(--stage-3)">
+        <div class="stage-head"><div class="num">3 · CRM &amp; SCORING</div></div>
+        <div class="node" id="node-c1"><b>CRM &amp; lead scoring</b><span>Enriquecimento + score fit/intenção</span></div>
+      </div>
+
+      <div class="diagram-col" style="--stage:var(--stage-4)">
+        <div class="stage-head"><div class="num">4 · ATIVAÇÃO MULTICANAL</div></div>
+        <div class="node" id="node-d1"><b>Contato imediato</b><span>WhatsApp + e-mail de boas-vindas</span></div>
+        <div class="node" id="node-d2"><b>Primeira semana</b><span>E-mail mkt + WhatsApp follow-up + 1ª ligação</span></div>
+        <div class="node" id="node-d3"><b>Segunda semana</b><span>E-mail pessoal + WhatsApp consultivo</span></div>
+        <div class="node" id="node-d4"><b>Terceira semana</b><span>E-mail mkt + WhatsApp urgência + 2ª ligação</span></div>
+        <div class="node" id="node-d5"><b>Quarta semana</b><span>E-mail pessoal</span></div>
+      </div>
+
+      <div class="diagram-col" style="--stage:var(--stage-5)">
+        <div class="stage-head"><div class="num">5 · VENDAS</div></div>
+        <div class="node" id="node-e1"><b>Qualificação SDR</b><span>Compreender o cliente</span></div>
+        <div class="node" id="node-e2"><b>Desenvolvimento de Negócios</b><span>Gerar novas oportunidades</span></div>
+        <div class="node" id="node-e3"><b>Demonstração e Proposta</b><span>Demonstrar valor</span></div>
+        <div class="node" id="node-e4"><b>Fechamento</b><span>Formalizar a parceria</span></div>
+      </div>
+
+      <div class="diagram-col" style="--stage:var(--stage-6)">
+        <div class="stage-head"><div class="num">6 · PÓS-VENDA</div></div>
+        <div class="node" id="node-f1"><b>Onboarding</b><span>Ativação e primeiros passos</span></div>
+        <div class="node" id="node-f2"><b>Suporte</b><span>Atendimento e resolução de dúvidas</span></div>
+        <div class="node" id="node-f3"><b>Customer Success</b><span>Acompanhamento contínuo</span></div>
+        <div class="node" id="node-f4"><b>Expansão</b><span>Crescimento da conta</span></div>
+        <div class="node" id="node-f5"><b>Indicação</b><span>Novas oportunidades</span></div>
+      </div>
+
+    </div>
+    <div class="diagram-loop-note">🔁 indicação vira novo lead — fecha o ciclo da máquina</div>
+  </div>
+
+  <div class="recovery">
+    <div class="recovery-title">Ramos de recuperação</div>
+    <div class="recovery-row">
+      <div class="recovery-card"><b>Lead Frio (estudante, professor)</b>Direcionado para redes sociais e blogs + nutrição de notícias blog</div>
+      <div class="recovery-card"><b>Lead Morno/Quente</b>Entra em nutrição e remarketing</div>
+    </div>
+    <div class="recovery-note">Sinal de interesse → reentra na esteira de ativação/vendas.</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="sw" style="background:var(--stage-1)"></span>Aquisição</div>
+    <div class="legend-item"><span class="sw" style="background:var(--stage-2)"></span>Conversão</div>
+    <div class="legend-item"><span class="sw" style="background:var(--stage-3)"></span>CRM / dados</div>
+    <div class="legend-item"><span class="sw" style="background:var(--stage-4)"></span>Ativação</div>
+    <div class="legend-item"><span class="sw" style="background:var(--stage-5)"></span>Vendas</div>
+    <div class="legend-item"><span class="sw" style="background:var(--bad)"></span>Recuperação (nutrição/remarketing)</div>
+    <div class="legend-item"><span class="sw" style="background:var(--stage-6)"></span>Pós-venda</div>
+  </div>
+
+  <div class="bridge">
+    <span>Como este framework se traduz na prática, todos os dias</span>
+    <div class="arrow">⇩</div>
+  </div>
+
+  <!-- ===================== PARTE 2 · MÁQUINA DE VENDAS ===================== -->
+  <div id="maquina-vendas" class="section-tag"><div class="num">2</div><div><b>Máquina de Vendas — AZTalent</b><span>A jornada completa do lead: da aquisição à expansão, com os ramos de recuperação</span></div></div>
+
+  <div class="pipeline-scroll">
+    <div class="pipeline">
+
+      <div class="stage" style="--stage:var(--stage-1)">
+        <div class="stage-head"><div class="num">1 · AQUISIÇÃO</div><div class="name">Tráfego Qualificado</div><div class="obj">Atrair empresas com potencial para se tornarem clientes da AZTalent.<br><span style="opacity:.75;">ICP: RH · SESMT · Jurídico · Sócios e gestores de PME</span></div><div class="tags">📣</div></div>
+        <div class="node">
+          <b>Google Ads</b>
+          <div class="node-line"><b>Capturamos demanda existente.</b> Rede de Pesquisa focada em empresas que já buscam soluções para adequação à NR-1 e gestão de SST.</div>
+        </div>
+        <div class="node">
+          <b>Meta Ads</b>
+          <div class="node-line"><b>Geramos reconhecimento e interesse.</b> Campanhas no Instagram e Facebook para despertar interesse e atrair novos leads por meio de materiais ricos.</div>
+        </div>
+        <div class="node">
+          <b>LinkedIn Ads</b>
+          <div class="node-line"><b>Alcançamos decisores B2B.</b> Lead Gen Forms, conteúdo patrocinado e remarketing para profissionais de RH, SST e gestores.</div>
+        </div>
+        <div class="node">
+          <b>SEO / Conteúdo</b>
+          <div class="node-line"><b>Construímos autoridade de forma orgânica.</b> Artigos do blog, materiais educativos e otimização para mecanismos de busca, gerando tráfego recorrente.</div>
+        </div>
+        <div class="node">
+          <b>Programa de Indicações</b>
+          <div class="node-line"><b>Transformamos clientes em promotores da marca.</b> Programa de benefícios para quem indica e para quem chega por indicação, incentivando novas oportunidades de negócio.</div>
+        </div>
+        <div class="node">
+          <b>Parcerias Estratégicas (White Label)</b>
+          <div class="node-line"><b>Expandimos nossa atuação por meio de parceiros.</b> Consultorias, empresas de SST, canais de distribuição e parceiros White Label comercializando a plataforma AZTalent.</div>
+        </div>
+        <div class="stage-kpi"><span class="kpi">CAC</span><span class="kpi">CPL</span><span class="kpi">CTR</span><span class="kpi">Leads Qualificados</span></div>
+      </div>
+
+      <div class="stage-arrow">→</div>
+
+      <div class="stage" style="--stage:var(--stage-2)">
+        <div class="stage-head"><div class="num">2 · CONVERSÃO</div><div class="name">Visitante → Lead</div><div class="obj">Capturamos o interesse e iniciamos a qualificação do lead.</div><div class="tags">💠📦</div></div>
+        <div class="node">
+          <b>Diagnóstico Gratuito NR-1</b>
+          <div class="node-line"><b>Principal CTA da AZTalent.</b> Coleta informações estratégicas da empresa, identifica o nível de maturidade em relação à NR-1 e gera um score inicial para priorização comercial.</div>
+        </div>
+        <div class="node">
+          <b>Material Rico (E-book / Guia NR-1)</b>
+          <div class="node-line"><b>Capturamos interesse e iniciamos a qualificação.</b> Download mediante formulário com coleta de dados como porte da empresa, segmento, cargo e momento da jornada de compra.</div>
+        </div>
+        <div class="node">
+          <b>Landing Pages Segmentadas</b>
+          <div class="node-line"><b>Experiência personalizada por origem.</b> Páginas específicas para campanhas, parceiros White Label, programa de indicações e diferentes perfis de público.</div>
+        </div>
+        <div class="node">
+          <b>Newsletter</b>
+          <div class="node-line"><b>Relacionamento contínuo com leads.</b> Cadastro para receber conteúdos e materiais educativos, mantendo o relacionamento com empresas ainda não prontas para uma abordagem comercial.</div>
+        </div>
+        <div class="node">
+          <b>Lead Gen Forms</b>
+          <div class="node-line"><b>Captura simplificada integrada ao CRM.</b> Formulários nativos sincronizados automaticamente com o CRM e com as automações da jornada comercial.</div>
+        </div>
+        <div class="stage-kpi"><span class="kpi">Conversão da LP</span><span class="kpi">% Leads Qualificados</span><span class="kpi">Origem dos Leads</span><span class="kpi">Conversão por Canal</span></div>
+        <div class="node-objective">O Material Rico desperta o interesse e inicia a coleta de dados; o Diagnóstico Gratuito aprofunda a qualificação e prioriza oportunidades para o Comercial.</div>
+      </div>
+
+      <div class="stage-arrow">→</div>
+
+      <div class="stage" style="--stage:var(--stage-3)">
+        <div class="stage-head"><div class="num">3 · CRM &amp; SCORING</div><div class="name">Dados &amp; Qualificação</div><div class="obj">Enriquecer, pontuar, automatizar e distribuir oportunidades.</div><div class="tags">📊🤖</div></div>
+        <div class="node">
+          <b>Enriquecimento de Dados - Coleta digital e Comercial</b>
+          <div class="node-line">Completar o perfil do lead</div>
+          <ul class="node-bullets">
+            <li>Empresa, porte e segmento</li>
+            <li>Cargo</li>
+            <li>Origem da conversão</li>
+            <li>Histórico de interações</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Lead Scoring</b>
+          <div class="node-line">Priorizar oportunidades</div>
+          <ul class="node-bullets">
+            <li>Fit da empresa</li>
+            <li>Interesse demonstrado</li>
+            <li>Engajamento</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Automações CRM</b>
+          <div class="node-line">Executar processos automaticamente</div>
+          <ul class="node-bullets">
+            <li>Campanhas distintas de e-mail marketing</li>
+            <li>Fluxos de nutrição</li>
+            <li>Reativação de leads</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Qualificação Comercial</b>
+          <div class="node-line">Direcionar estratégia para cada lead</div>
+          <ul class="node-bullets">
+            <li>Quente → Nutrição e Comercial Ativo</li>
+            <li>Morno → Nutrição e Comercial</li>
+            <li>Frio → Nutrição Parcial</li>
+          </ul>
+        </div>
+        <div class="stage-kpi"><span class="kpi">% enriquecido</span><span class="kpi">SLA ≤5min</span></div>
+      </div>
+
+      <div class="stage-arrow">→</div>
+
+      <div class="stage" style="--stage:var(--stage-4)">
+        <div class="stage-head"><div class="num">4 · ATIVAÇÃO</div><div class="name">Jornada de Nutrição Multicanal</div><div class="obj">Transformamos o interesse pelo e-book em oportunidades comerciais qualificadas.</div><div class="tags">⚙️🤖</div></div>
+        <div class="node">
+          <b>Imediato</b>
+          <div class="node-line">📱 WhatsApp de boas-vindas + link para o diagnóstico gratuito</div>
+          <div class="node-line">📧 E-mail de boas-vindas + entrega do e-book + convite para realizar o diagnóstico</div>
+        </div>
+        <div class="node">
+          <b>Primeira semana</b>
+          <div class="node-line">📧 E-mail marketing com conteúdo educativo (artigo do blog)</div>
+          <div class="node-line">💬 WhatsApp de follow-up incentivando a realização do diagnóstico</div>
+          <div class="node-line">📞 1ª tentativa de contato do SDR</div>
+        </div>
+        <div class="node">
+          <b>Segunda semana</b>
+          <div class="node-line">📧 E-mail pessoal do especialista comercial</div>
+          <div class="node-line">💬 WhatsApp consultivo para entender o cenário da empresa e oferecer apoio</div>
+        </div>
+        <div class="node">
+          <b>Terceira semana</b>
+          <div class="node-line">📧 E-mail marketing apresentando benefícios da solução e prova de valor</div>
+          <div class="node-line">💬 WhatsApp com senso de urgência para realização do diagnóstico e agendamento de uma reunião</div>
+          <div class="node-line">📞 2ª tentativa de contato do SDR</div>
+        </div>
+        <div class="node">
+          <b>Quarta semana</b>
+          <div class="node-line">📧 Último e-mail de relacionamento com convite para agendar uma reunião</div>
+        </div>
+        <div class="stage-kpi"><span class="kpi">Diagnósticos realizados</span><span class="kpi">Reuniões agendadas</span></div>
+        <div class="node-objective">Objetivo: conduzir o lead desde o download do e-book até o agendamento de uma reunião de apresentação da plataforma AZTalent.</div>
+      </div>
+
+      <div class="stage-arrow">→</div>
+
+      <div class="stage" style="--stage:var(--stage-5)">
+        <div class="stage-head"><div class="num">5 · VENDAS</div><div class="name">Converter oportunidades em clientes</div><div class="obj">Venda consultiva, desenvolvimento de negócios e fechamento.</div><div class="tags">💠</div></div>
+        <div class="node">
+          <b>Qualificação SDR</b>
+          <div class="node-line">Compreender o cenário do cliente</div>
+          <ul class="node-bullets">
+            <li>Ligação de descoberta</li>
+            <li>Validação do ICP</li>
+            <li>Identificação de dores e oportunidades</li>
+            <li>Agendamento da demonstração</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Desenvolvimento de Negócios</b>
+          <div class="node-line">Expandir oportunidades comerciais</div>
+          <ul class="node-bullets">
+            <li>Prospecção ativa de clientes</li>
+            <li>Busca de parceiros estratégicos</li>
+            <li>Participação em feiras e eventos</li>
+            <li>Networking e relacionamento comercial</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Demonstração e Proposta</b>
+          <div class="node-line">Apresentar valor para a operação</div>
+          <ul class="node-bullets">
+            <li>Demonstração personalizada</li>
+            <li>Simulação de investimento (ROI)</li>
+            <li>Negociação e tratativa de objeções</li>
+            <li>Follow-up comercial</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Fechamento</b>
+          <div class="node-line">Formalizar a parceria</div>
+          <ul class="node-bullets">
+            <li>Assinatura eletrônica</li>
+            <li>Kick-off automatizado</li>
+            <li>Encaminhar para Onboarding</li>
+          </ul>
+        </div>
+        <div class="stage-kpi"><span class="kpi">Win rate</span><span class="kpi">Ciclo médio</span></div>
+      </div>
+
+      <div class="stage-arrow">→</div>
+
+      <div class="stage" style="--stage:var(--stage-6)">
+        <div class="stage-head"><div class="num">6 · PÓS-VENDA</div><div class="name">Onboarding → Expansão</div><div class="obj">Onde a receita recorrente se sustenta</div><div class="tags">🤝📦</div></div>
+        <div class="node">
+          <b>Onboarding</b>
+          <div class="node-line">Ativação e primeiros passos</div>
+          <ul class="node-bullets">
+            <li>Boas-vindas automatizadas</li>
+            <li>Coleta de informações</li>
+            <li>Configuração inicial</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Suporte</b>
+          <div class="node-line">Atendimento e resolução de dúvidas</div>
+          <ul class="node-bullets">
+            <li>Suporte por e-mail</li>
+            <li>Gestão de chamados</li>
+            <li>Base de conhecimento</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Customer Success</b>
+          <div class="node-line">Acompanhamento contínuo</div>
+          <ul class="node-bullets">
+            <li>Check-ins periódicos</li>
+            <li>Pesquisas de satisfação (NPS)</li>
+            <li>Monitoramento da saúde do cliente</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Expansão</b>
+          <div class="node-line">Identificação de oportunidades</div>
+          <ul class="node-bullets">
+            <li>Cross-sell e novos módulos</li>
+            <li>Campanhas de engajamento</li>
+            <li>Oportunidades de crescimento</li>
+          </ul>
+        </div>
+        <div class="node">
+          <b>Indicação</b>
+          <div class="node-line">Transformar clientes em promotores</div>
+          <ul class="node-bullets">
+            <li>Programa de indicações</li>
+            <li>Solicitação de avaliações</li>
+            <li>Novas oportunidades</li>
+          </ul>
+        </div>
+        <div class="stage-kpi"><span class="kpi">Churn</span><span class="kpi">NPS/CSAT</span></div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ===================== FOOTER ===================== -->
+  <div class="strip">
+    <div class="loop-card">
+      <div class="loop-title">
+        <div><b>Esteira de Implementação — ICA</b><span>Como implementamos o projeto do cliente, da compra até o treinamento na plataforma</span></div>
+      </div>
+      <div class="loop-scroll">
+        <div class="loop-steps">
+          <div class="loop-step"><div class="n">1</div><b>Compra</b><small>Aquisição pela landing page oficial da AIZON</small></div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step"><div class="n">2</div><b>Boas-vindas</b><small>Envio automático de e-mail e coleta de informações</small></div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step"><div class="n">3</div><b>Kick-off</b><small>Reunião para entendimento do projeto e briefing criativo</small></div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step"><div class="n">4</div><b>Desenvolvimento Criativo</b><small>Criação de 3 propostas de layout para aprovação</small></div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step"><div class="n">5</div><b>Configuração</b><small>IA, automações e integrações (WhatsApp, redes sociais, pipeline e CRM)</small></div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step"><div class="n">6</div><b>Validação</b><small>Apresentação da LP personalizada e coleta de feedback</small></div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step"><div class="n">7</div><b>Entrega</b><small>Publicação oficial e envio comprovatório</small></div>
+          <div class="loop-arrow">→</div>
+          <div class="loop-step"><div class="n">8</div><b>Treinamento</b><small>Capacitação na plataforma Studio MKT</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="banner">🎯 <b>A Aizon opera como um único sistema.</b> Cada área conectada por dados, IA e experimentação — do primeiro contato à expansão do cliente.</div>
+    <footer class="brand">Aizon Technologies</footer>
+  </div>
+</div>
+
+<script>
+(function(){
+  var NS = 'http://www.w3.org/2000/svg';
+  function pt(el, side, wr){
+    var r = el.getBoundingClientRect();
+    if(side==='right') return {x:r.right-wr.left, y:r.top+r.height/2-wr.top};
+    if(side==='left')  return {x:r.left-wr.left,  y:r.top+r.height/2-wr.top};
+    if(side==='bottom')return {x:r.left+r.width/2-wr.left, y:r.bottom-wr.top};
+    if(side==='top')   return {x:r.left+r.width/2-wr.left, y:r.top-wr.top};
+  }
+  function draw(){
+    var wrap = document.getElementById('diagramWrap');
+    var svg = document.getElementById('diagramSvg');
+    if(!wrap || !svg) return;
+    var wr = wrap.getBoundingClientRect();
+    svg.setAttribute('width', wr.width);
+    svg.setAttribute('height', wr.height);
+    svg.setAttribute('viewBox', '0 0 ' + wr.width + ' ' + wr.height);
+    Array.prototype.slice.call(svg.querySelectorAll('path.conn-path')).forEach(function(p){ p.remove(); });
+
+    function g(id){ return document.getElementById(id); }
+    function elbow(a, b, dashed){
+      var midX = (a.x + b.x) / 2;
+      var d = 'M'+a.x+','+a.y+' L'+midX+','+a.y+' L'+midX+','+b.y+' L'+b.x+','+b.y;
+      var p = document.createElementNS(NS,'path');
+      p.setAttribute('d', d);
+      p.setAttribute('class', 'conn-path'+(dashed?' dashed':''));
+      p.setAttribute('marker-end', 'url(#arrowhead)');
+      svg.appendChild(p);
+    }
+    function straight(a, b, dashed){
+      var p = document.createElementNS(NS,'path');
+      p.setAttribute('d', 'M'+a.x+','+a.y+' L'+b.x+','+b.y);
+      p.setAttribute('class', 'conn-path'+(dashed?' dashed':''));
+      svg.appendChild(p);
+    }
+
+    ['node-a1','node-a2','node-a3','node-a4','node-a5'].forEach(function(id){
+      elbow(pt(g(id),'right',wr), pt(g('node-b1'),'left',wr));
+    });
+    elbow(pt(g('node-b1'),'right',wr), pt(g('node-c1'),'left',wr));
+    elbow(pt(g('node-c1'),'right',wr), pt(g('node-d1'),'left',wr));
+
+    var dChain = ['node-d1','node-d2','node-d3','node-d4','node-d5'];
+    for(var i=0;i<dChain.length-1;i++){
+      straight(pt(g(dChain[i]),'bottom',wr), pt(g(dChain[i+1]),'top',wr), true);
+    }
+    elbow(pt(g('node-d5'),'right',wr), pt(g('node-e1'),'left',wr));
+
+    var eChain = ['node-e1','node-e2','node-e3','node-e4'];
+    for(var j=0;j<eChain.length-1;j++){
+      straight(pt(g(eChain[j]),'bottom',wr), pt(g(eChain[j+1]),'top',wr));
+    }
+    elbow(pt(g('node-e4'),'right',wr), pt(g('node-f1'),'left',wr));
+
+    var fChain = ['node-f1','node-f2','node-f3','node-f4','node-f5'];
+    for(var k=0;k<fChain.length-1;k++){
+      straight(pt(g(fChain[k]),'bottom',wr), pt(g(fChain[k+1]),'top',wr));
+    }
+
+    var f = pt(g('node-f5'),'bottom',wr);
+    var a = pt(g('node-a1'),'bottom',wr);
+    var bottomY = wr.height - 22;
+    var loopPath = document.createElementNS(NS,'path');
+    loopPath.setAttribute('d', 'M'+f.x+','+f.y+' L'+f.x+','+bottomY+' L'+a.x+','+bottomY+' L'+a.x+','+a.y);
+    loopPath.setAttribute('class', 'conn-path dashed');
+    loopPath.setAttribute('marker-end', 'url(#arrowhead)');
+    svg.appendChild(loopPath);
+  }
+  draw();
+  window.addEventListener('load', draw);
+  window.addEventListener('resize', draw);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(draw); }
+})();
+</script>
