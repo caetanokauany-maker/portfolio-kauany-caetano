@@ -230,3 +230,41 @@ document.querySelectorAll('.book-source').forEach(source => {
     }
   });
 })();
+
+// Article viewer: open PDFs and Word docs in a popup instead of navigating away
+(() => {
+  const items = document.querySelectorAll('.article-item[data-ext]');
+  if (!items.length) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'file-overlay';
+  overlay.innerHTML = '<div class="file-overlay-inner"><button class="file-overlay-close" aria-label="Fechar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg></button><iframe title="Artigo"></iframe></div>';
+  document.body.appendChild(overlay);
+  const iframe = overlay.querySelector('iframe');
+  const closeBtn = overlay.querySelector('.file-overlay-close');
+
+  function closeFile() {
+    overlay.classList.remove('open');
+    document.body.classList.remove('lightbox-locked');
+    iframe.src = 'about:blank';
+  }
+
+  items.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const ext = link.getAttribute('data-ext');
+      iframe.src = ext === 'pdf'
+        ? link.href
+        : 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(link.href);
+      overlay.classList.add('open');
+      document.body.classList.add('lightbox-locked');
+    });
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target === closeBtn || closeBtn.contains(e.target)) closeFile();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeFile();
+  });
+})();

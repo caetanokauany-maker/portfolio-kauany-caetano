@@ -1395,6 +1395,67 @@ a { color: inherit; text-decoration: none; }
 
 body.lightbox-locked { overflow: hidden; }
 
+.file-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 11, 8, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease;
+}
+
+.file-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.file-overlay-inner {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  height: 100%;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
+.file-overlay-inner iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.file-overlay-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.file-overlay-close:hover { background: rgba(0, 0, 0, 0.75); }
+
+@media (max-width: 720px) {
+  .file-overlay { padding: 0; }
+  .file-overlay-inner { max-width: 100%; border-radius: 0; }
+}
+
 @media (max-width: 720px) {
   .nav-toggle { display: flex; }
 
