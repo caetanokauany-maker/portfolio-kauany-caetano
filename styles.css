@@ -1589,7 +1589,7 @@ body.lightbox-locked { overflow: hidden; }
   }
 }
 
-/* Homepage brand marquee */
+/* Homepage brand strip */
 .brand-marquee-section {
   padding: 8px 32px 0;
 }
@@ -1604,57 +1604,33 @@ body.lightbox-locked { overflow: hidden; }
   margin: 0 0 22px;
 }
 
-.brand-marquee {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-}
-
-.brand-marquee-track {
+.brand-grid {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  width: max-content;
-  animation: brand-marquee-scroll 32s linear infinite;
+  justify-content: center;
+  gap: 16px;
 }
 
-.brand-marquee:hover .brand-marquee-track {
-  animation-play-state: paused;
-}
-
-.brand-marquee-item {
-  flex: 0 0 auto;
+.brand-chip {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px;
-  padding: 0 36px;
+  height: 64px;
+  padding: 14px 26px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
 }
 
-.brand-marquee-item img {
-  max-height: 30px;
+.brand-chip img {
+  max-height: 32px;
   max-width: 130px;
   width: auto;
   object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.6;
-  transition: filter 0.25s ease, opacity 0.25s ease;
-}
-
-.brand-marquee-item img:hover {
-  filter: grayscale(0%);
-  opacity: 1;
-}
-
-@keyframes brand-marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .brand-marquee-track { animation: none; }
 }
 
 @media (max-width: 720px) {
-  .brand-marquee-item { height: 48px; padding: 0 22px; }
-  .brand-marquee-item img { max-height: 24px; max-width: 100px; }
+  .brand-chip { height: 52px; padding: 10px 20px; border-radius: 16px; }
+  .brand-chip img { max-height: 24px; max-width: 100px; }
 }
