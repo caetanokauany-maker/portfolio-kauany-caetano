@@ -7,6 +7,32 @@ if (!window.location.hash) {
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Subtle fade/slide-in as sections scroll into view
+(() => {
+  const targets = document.querySelectorAll('.card, .cover-card, .strategic-project, .article-group, .masonry-item, .step-node, .timeline-item, .info-card');
+  if (!targets.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(el => el.classList.add('in-view'));
+    return;
+  }
+
+  targets.forEach((el, i) => {
+    el.classList.add('reveal');
+    el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  targets.forEach(el => observer.observe(el));
+})();
+
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
 
