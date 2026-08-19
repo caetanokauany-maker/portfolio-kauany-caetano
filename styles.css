@@ -751,6 +751,27 @@ a { color: inherit; text-decoration: none; }
   border-top: 1px solid var(--border);
 }
 
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px 24px;
+  margin: 0;
+}
+
+.metrics-category-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.metrics-category-list {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0;
+}
+
 .project-visual-frame {
   margin: 40px 0;
   border-radius: var(--radius-lg);
