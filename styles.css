@@ -886,6 +886,173 @@ a { color: inherit; text-decoration: none; }
   margin: 40px 0;
 }
 
+/* Framework diagram (native recreation) */
+.aizon-diagram {
+  margin: 40px 0;
+}
+
+.aizon-steps {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-bottom: 36px;
+}
+
+.aizon-step {
+  position: relative;
+  padding: 0 12px;
+  text-align: center;
+}
+
+.aizon-step:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: 44px;
+  right: 100%;
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+}
+
+.aizon-step-num {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.aizon-step .icon-circle {
+  margin: 0 auto 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.aizon-step-title {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.aizon-step-desc {
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+}
+
+.aizon-step-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+}
+
+.aizon-step-list li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.aizon-step-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--eyebrow);
+}
+
+.aizon-hub {
+  text-align: center;
+  padding: 28px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 28px;
+}
+
+.aizon-hub .icon-circle {
+  margin: 0 auto 12px;
+}
+
+.aizon-hub-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.aizon-hub-text {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.aizon-recovery-label {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+}
+
+.aizon-recovery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.aizon-recovery-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.aizon-recovery-card .icon-circle {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.aizon-recovery-card-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+
+.aizon-recovery-card-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .aizon-steps { grid-template-columns: repeat(2, 1fr); row-gap: 32px; }
+  .aizon-step:not(:first-child)::before { display: none; }
+  .aizon-recovery-grid { grid-template-columns: 1fr; }
+}
+
 .project-visual-frame {
   margin: 40px 0;
   border-radius: var(--radius-lg);
