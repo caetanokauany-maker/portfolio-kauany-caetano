@@ -1705,7 +1705,21 @@ body.lightbox-locked { overflow: hidden; }
   object-fit: contain;
 }
 
+.brand-chip img[alt="Rough.ag Comunicações"],
+.brand-chip img[alt="Editora Oficina do Livro"],
+.brand-chip img[alt="Mike Tec"] {
+  max-height: 78px;
+  max-width: 200px;
+}
+
 @media (max-width: 720px) {
   .brand-grid { gap: 26px 32px; }
   .brand-chip img { max-height: 38px; max-width: 120px; }
+
+  .brand-chip img[alt="Rough.ag Comunicações"],
+  .brand-chip img[alt="Editora Oficina do Livro"],
+  .brand-chip img[alt="Mike Tec"] {
+    max-height: 54px;
+    max-width: 150px;
+  }
 }
